@@ -82,7 +82,7 @@ def overlap_im(im1,im2):
       
     for m in range(128):
         for n in range(128):
-            if im1 > 0 and im2 > 0:
+            if im1[m,n] > 0 and im2[m,n] > 0:
                 new_im[m,n] = [255*yellow_rgb[0], 255*yellow_rgb[1],255*yellow_rgb[2]]
             elif im1[m,n] > 0 and im2[m,n] == 0:
                 ori_hsv = colorsys.rgb_to_hsv(im1[x,y], im1[x,y], im1[x,y])
