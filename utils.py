@@ -66,12 +66,8 @@ def overlap_im(im1,im2):
     if np.max(im1)>1:
         im1 = im1/255.
 
-    print(np.shape(im1))
-
     if np.max(im2)>1:
         im2 = im2/255.
-
-    print(np.shape(im2))
 
     yellow_rgb = (0, 1., 1.) #bgr
     yellow_hsv = colorsys.rgb_to_hsv(yellow_rgb[0], yellow_rgb[1],yellow_rgb[2])
@@ -89,15 +85,15 @@ def overlap_im(im1,im2):
             if im1[m,n] > 0 and im2[m,n] > 0:
                 new_im[m,n] = [255*yellow_rgb[0], 255*yellow_rgb[1],255*yellow_rgb[2]]
             elif im1[m,n] > 0 and im2[m,n] == 0:
-                ori_hsv = colorsys.rgb_to_hsv(im1[x,y], im1[x,y], im1[x,y])
+                ori_hsv = colorsys.rgb_to_hsv(im1[m,n], im1[m,n], im1[m,n])
                 new_hsv = (blue_hsv[0], blue_hsv[1], ori_hsv[2])
                 new_rgb = colorsys.hsv_to_rgb(new_hsv[0], new_hsv[1], new_hsv[2])    
-                new_im[x,y] = [255*new_rgb[0], 255*new_rgb[1], 255*new_rgb[2]]
+                new_im[m,n] = [255*new_rgb[0], 255*new_rgb[1], 255*new_rgb[2]]
             else:
-                ori_hsv = colorsys.rgb_to_hsv(im2[x,y]/255., im2[x,y]/255., im2[x,y]/255.)
+                ori_hsv = colorsys.rgb_to_hsv(im2[m,n], im2[m,n], im2[m,n])
                 new_hsv = (orange_hsv[0], orange_hsv[1], ori_hsv[2])
                 new_rgb = colorsys.hsv_to_rgb(new_hsv[0], new_hsv[1], new_hsv[2])    
-                new_im[x,y] = [255*new_rgb[0], 255*new_rgb[1], 255*new_rgb[2]]
+                new_im[m,n] = [255*new_rgb[0], 255*new_rgb[1], 255*new_rgb[2]]
 
     return new_im
 
@@ -121,13 +117,13 @@ def overlap_batch(im1,im2):
         m = i//8
         n = i%8
 
-        new_im[m*128:(m+1)*128,n*128:(n+1)*128,0] = im_a
-        new_im[m*128:(m+1)*128,n*128:(n+1)*128,1] = im_a
-        new_im[m*128:(m+1)*128,n*128:(n+1)*128,2] = im_a
+        new_im[m*128:(m+1)*128,n*128:(n+1)*128,0] = im_a*255
+        new_im[m*128:(m+1)*128,n*128:(n+1)*128,1] = im_a*255
+        new_im[m*128:(m+1)*128,n*128:(n+1)*128,2] = im_a*255
 
-        new_im[m*128:(m+1)*128,128*8+n*128:128*8+(n+1)*128,0] = im_b
-        new_im[m*128:(m+1)*128,128*8+n*128:128*8+(n+1)*128,1] = im_b
-        new_im[m*128:(m+1)*128,128*8+n*128:128*8+(n+1)*128,2] = im_b
+        new_im[m*128:(m+1)*128,128*8+n*128:128*8+(n+1)*128,0] = im_b*255
+        new_im[m*128:(m+1)*128,128*8+n*128:128*8+(n+1)*128,1] = im_b*255
+        new_im[m*128:(m+1)*128,128*8+n*128:128*8+(n+1)*128,2] = im_b*255
 
         new_im[m*128:(m+1)*128,128*16+n*128:128*16+(n+1)*128,:] = im_c
 
@@ -143,15 +139,18 @@ def overlap_batch(im1,im2):
     
 
     for i in range(1,8):
-        im_[i*128,:128*8,:] = [255*blue_rgb[0], 255*blue_rgb[1],255*blue_rgb[2]]
-        im_[:,i*128,:] = [255*blue_rgb[0], 255*blue_rgb[1],255*blue_rgb[2]]
+        new_im[i*128,:128*8,:] = [255*blue_rgb[0], 255*blue_rgb[1],255*blue_rgb[2]]
+        new_im[:,i*128,:] = [255*blue_rgb[0], 255*blue_rgb[1],255*blue_rgb[2]]
 
     for i in range(1,8):
-        im_[i*128,128*8:128*16,:] = [255*orange_rgb[0], 255*orange_rgb[1],255*orange_rgb[2]]
-        im_[:,128*8+i*128,:] = [255*orange_rgb[0], 255*orange_rgb[1],255*orange_rgb[2]]
+        new_im[i*128,128*8:128*16,:] = [255*orange_rgb[0], 255*orange_rgb[1],255*orange_rgb[2]]
+        new_im[:,128*8+i*128,:] = [255*orange_rgb[0], 255*orange_rgb[1],255*orange_rgb[2]]
 
     for i in range(1,8):
-        im_[i*128,128*16:128*24,:] = [255, 255, 255]
-        im_[:,128*16+i*128,:] = [255, 255, 255]
+        new_im[i*128,128*16:128*24,:] = [255, 255, 255]
+        new_im[:,128*16+i*128,:] = [255, 255, 255]
+
+    new_im[:,128*8,:] = [255, 255, 255]
+    new_im[:,128*16,:] = [255, 255, 255]
 
     return new_im
