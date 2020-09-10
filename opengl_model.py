@@ -45,14 +45,17 @@ def estimate_3D_to_2D(ox,oy,FocalLength_x,FocalLength_y,a,b,g,x_trans,z_trans,r,
 
 class gl_ob(object):
     
-  def __init__(self, width=128, height=128, batch_size=64, option = 'M', path = 'model1', points_path = 'points1.npy'):
+  def __init__(self, width=128, height=128, batch_size=64, option = 'M', \
+                path = './z2x-pose-estimation/stl_models/model1', \
+                points_path = './z2x-pose-estimation/stl_models/points1.npy'):
+    
     self.width = width
     self.height = height
     self.batch_size = batch_size
     self.option =  option
 
 
-    self.path = os.path.join("./colab-pose-VAE",path)
+    self.path = path
     file = stl_model(self.path)
     self.tri = file.tri
 
@@ -61,7 +64,7 @@ class gl_ob(object):
     self.resize_window_side = 480
     self.initiate()
 
-    self.spe_points = np.load(os.path.join("./colab-pose-VAE", points_path))
+    self.spe_points = np.load(points_path)
 
     self.ox = 3.245938552764519e+02
     self.oy = 2.634932055129686e+02
