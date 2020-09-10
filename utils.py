@@ -66,8 +66,12 @@ def overlap_im(im1,im2):
     if np.max(im1)>1:
         im1 = im1/255.
 
+    print(np.shape(im1))
+
     if np.max(im2)>1:
         im2 = im2/255.
+
+    print(np.shape(im2))
 
     yellow_rgb = (0, 1., 1.) #bgr
     yellow_hsv = colorsys.rgb_to_hsv(yellow_rgb[0], yellow_rgb[1],yellow_rgb[2])
