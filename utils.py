@@ -1,6 +1,7 @@
 import numpy as np
 from PIL import Image
 import colorsys
+import cv2
 
 def batch_im_save(im,name,path='/content/gdrive/My Drive/model'):
 
