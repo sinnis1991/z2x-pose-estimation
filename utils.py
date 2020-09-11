@@ -157,3 +157,66 @@ def overlap_batch(im1,im2):
     # new_im[:,128*16,:] = [255, 255, 255]
 
     return new_im
+
+
+def overlap_regression(im1,im2):
+
+    if np.max(im1)>1:
+        im1 = im1/255.
+
+    if np.max(im2)>1:
+        im2 = im2/255.
+
+    new_im = np.zeros((128*8,128*8*3+128,4))
+
+    im_a = im1
+    im_a_large = cv2.resize(im_a,(128*4,128*4))
+    new_im[2*128:6*128,2*128:6*128,0] = im_a_large*255
+    new_im[2*128:6*128,2*128:6*128,1] = im_a_large*255
+    new_im[2*128:6*128,2*128:6*128,2] = im_a_large*255
+    new_im[2*128:6*128,2*128:6*128,3] = 255
+    
+    new_im[2*128:6*128,2*128,:3] = [255*blue_rgb[0], 255*blue_rgb[1],255*blue_rgb[2]]
+    new_im[2*128:6*128,6*128,:3] = [255*blue_rgb[0], 255*blue_rgb[1],255*blue_rgb[2]]
+    new_im[2*128,2*128:6*128,:3] = [255*blue_rgb[0], 255*blue_rgb[1],255*blue_rgb[2]]
+    new_im[6*128,2*128:6*128,:3] = [255*blue_rgb[0], 255*blue_rgb[1],255*blue_rgb[2]]
+
+
+    for i in range(64):
+
+        im_b = im2[i]
+
+        im_c = overlap_im(im_a,im_b)
+
+        m = i//8
+        n = i%8
+
+        
+
+        new_im[m*128:(m+1)*128,64+128*8+n*128:64+128*8+(n+1)*128,0] = im_b*255
+        new_im[m*128:(m+1)*128,64+128*8+n*128:64+128*8+(n+1)*128,1] = im_b*255
+        new_im[m*128:(m+1)*128,64+128*8+n*128:64+128*8+(n+1)*128,2] = im_b*255
+        new_im[m*128:(m+1)*128,64+128*8+n*128:64+128*8+(n+1)*128,3] = 255
+
+        new_im[m*128:(m+1)*128,128+128*16+n*128:128+128*16+(n+1)*128,:3] = im_c
+        new_im[m*128:(m+1)*128,128+128*16+n*128:128+128*16+(n+1)*128,3] = 255
+
+    
+    yellow_rgb = (0, 1., 1.) #bgr
+    yellow_hsv = colorsys.rgb_to_hsv(yellow_rgb[0], yellow_rgb[1],yellow_rgb[2])
+
+    orange_rgb = (25/255.,133/255.,240/255.)
+    orange_hsv = colorsys.rgb_to_hsv(orange_rgb[0], orange_rgb[1],orange_rgb[2])
+
+    blue_rgb = (233/255.,162/255.,0)
+    blue_hsv = colorsys.rgb_to_hsv(blue_rgb[0], blue_rgb[1],blue_rgb[2])
+
+    for i in range(1,8):
+        new_im[i*128,64+128*8:64+128*16,:3] = [255*orange_rgb[0], 255*orange_rgb[1],255*orange_rgb[2]]
+        new_im[:,64+128*8+i*128,:3] = [255*orange_rgb[0], 255*orange_rgb[1],255*orange_rgb[2]]
+
+    for i in range(1,8):
+        new_im[i*128,128+128*16:128+128*24,:3] = [255, 255, 255]
+        new_im[:,128+128*16+i*128,:3] = [255, 255, 255]
+
+    return new_im
