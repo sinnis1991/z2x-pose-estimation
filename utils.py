@@ -231,7 +231,7 @@ def overlap_regression(im1,im2):
 
     return new_im
 
-def create_gif(path,name,Format="png"):
+def create_gif(path,name,Format="png",scale=1):
 
     frames = []
 
@@ -241,7 +241,14 @@ def create_gif(path,name,Format="png"):
 
         new_frame = Image.open( os.path.join( path,'{}.'.format(i)+Format) )
 
+        if scale !=1:
+            x = round(new_frame.size[0]*scale)
+            y = round(new_frame.size[1]*scale)
+            new_frame = new_frame.resize((x,y))
+
         new_frame = new_frame.quantize()
+
+
 
         frames.append(new_frame)
 
