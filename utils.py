@@ -229,3 +229,20 @@ def overlap_regression(im1,im2):
         new_im[:,128+128*16+i*128,:3] = [255, 255, 255]
 
     return new_im
+
+def create_gif(path,name,Format="png"):
+
+    frames = []
+
+    num = len(os.listdir(path))
+
+    for i in range(num):
+
+        new_frame = Image.open( os.path.join( path,'{}.'.format(i)+Format) )
+
+        new_frame = new_frame.quantize()
+
+        frames.append(new_frame)
+
+    # Save into a GIF file that loops forever
+    frames[0].save(name, format='GIF', append_images=frames[1:], optimize=True, save_all=True, duration=1, loop=0)
