@@ -494,3 +494,25 @@ class gl_ob(object):
     result = small[1]
 
     return result,if_window_in
+
+  def produce_syn_im(self, a=0, b=0, g=0, x=0, z=0, r=0.3):
+    
+    tmp_arr = self.static_sence(a,b,g,x,z,r)
+    
+    im_shape = np.shape(tmp_arr)
+
+    new_im = np.zeros(im_shape)
+    
+    for m in range(im_shape[0]):
+      for n in range(im_shape[1]):
+        x = im_shape[0]-m-1
+        y = im_shape[1]-n-1
+        new_im[x,y] = tmp_arr[m,n]
+
+    return new_im
+
+
+
+
+
+  static_sence(self, a=0, b=0, g=0, x=0, z=0, r=0.3):
