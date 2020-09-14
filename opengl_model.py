@@ -506,7 +506,8 @@ class gl_ob(object):
     for m in range(im_shape[0]):
       for n in range(im_shape[1]):
         x = im_shape[0]-m-1
-        y = im_shape[1]-n-1
+        # y = im_shape[1]-n-1
+        y=n
         new_im[x,y] = tmp_arr[m,n]
 
     return new_im
