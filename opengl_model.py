@@ -511,8 +511,3 @@ class gl_ob(object):
 
     return new_im
 
-
-
-
-
-  static_sence(self, a=0, b=0, g=0, x=0, z=0, r=0.3):
