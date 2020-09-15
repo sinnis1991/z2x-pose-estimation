@@ -9,6 +9,15 @@ then
 
   tar -xvf model.tar
   mv ./model_1 $2
+
+else [ $1='3' ]
+	#https://drive.google.com/file/d/1-UdE8ZUe4BVELN86OWLt5jAcCGv-Stsz/view?usp=sharing
+	wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies \
+    /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1-UdE8ZUe4BVELN86OWLt5jAcCGv-Stsz' \
+    -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1-UdE8ZUe4BVELN86OWLt5jAcCGv-Stsz" -O model.tar && rm -rf /tmp/cookies.txt
+
+  tar -xvf model.tar
+  mv ./model_3 $2
 fi
 
 # echo $2
