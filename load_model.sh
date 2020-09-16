@@ -2,6 +2,7 @@
 
 a="model1"
 c="model3"
+e="model5"
 
 if [ "$1" == "$a" ]
 then
@@ -22,6 +23,16 @@ wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download
 
 tar -xvf model.tar
 mv ./model_3 $2
+# echo $c
+elif [ "$1" == "$e" ]
+then
+# https://drive.google.com/file/d/1h06ozWwQAsyW4IZeZgKXO5tTAUQ1U4Pf/view?usp=sharing
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies \
+  /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1h06ozWwQAsyW4IZeZgKXO5tTAUQ1U4Pf' \
+  -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1h06ozWwQAsyW4IZeZgKXO5tTAUQ1U4Pf" -O model.tar && rm -rf /tmp/cookies.txt
+
+tar -xvf model.tar
+mv ./model_5 $2
 # echo $c
 else
 echo "invalid index"
