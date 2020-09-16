@@ -2,6 +2,7 @@
 
 a="model1"
 c="model3"
+d="model4"
 e="model5"
 
 if [ "$1" == "$a" ]
@@ -23,6 +24,16 @@ wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download
 
 tar -xvf model.tar
 mv ./model_3 $2
+elif [ "$1" == "$d" ]
+then
+# https://drive.google.com/file/d/1ntn3QIIJjgCr0N5ECv2DoLdYWRPLUW3P/view?usp=sharing
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies \
+  /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1ntn3QIIJjgCr0N5ECv2DoLdYWRPLUW3P' \
+  -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1ntn3QIIJjgCr0N5ECv2DoLdYWRPLUW3P" -O model.tar && rm -rf /tmp/cookies.txt
+
+tar -xvf model.tar
+mv ./model_4 $2
+# echo $c
 # echo $c
 elif [ "$1" == "$e" ]
 then
