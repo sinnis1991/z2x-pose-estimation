@@ -9,8 +9,8 @@ then
 
   tar -xvf model.tar
   mv ./model_1 $2
-
-else [ $1='3' ]
+elif [ $1='3' ]
+then
 	#https://drive.google.com/file/d/1-UdE8ZUe4BVELN86OWLt5jAcCGv-Stsz/view?usp=sharing
 	wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies \
     /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1-UdE8ZUe4BVELN86OWLt5jAcCGv-Stsz' \
@@ -19,5 +19,3 @@ else [ $1='3' ]
   tar -xvf model.tar
   mv ./model_3 $2
 fi
-
-# echo $2
