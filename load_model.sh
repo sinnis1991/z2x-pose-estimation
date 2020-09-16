@@ -1,6 +1,7 @@
 #!/bin/sh
 
 a="model1"
+b="model2"
 c="model3"
 d="model4"
 e="model5"
@@ -15,6 +16,15 @@ wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download
 
 tar -xvf model.tar
 mv ./model_1 $2
+elif [ "$1" == "$b" ]
+then
+# https://drive.google.com/file/d/1W41dDSDl3dwMpOc7BPqmVKlSdHM6cuss/view?usp=sharing
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies \
+  /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1W41dDSDl3dwMpOc7BPqmVKlSdHM6cuss' \
+  -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1W41dDSDl3dwMpOc7BPqmVKlSdHM6cuss" -O model.tar && rm -rf /tmp/cookies.txt
+
+tar -xvf model.tar
+mv ./model_2 $2
 elif [ "$1" == "$c" ]
 then
 # https://drive.google.com/file/d/1-UdE8ZUe4BVELN86OWLt5jAcCGv-Stsz/view?usp=sharing
