@@ -40,6 +40,30 @@ def transfrom_batch(im):
 
     return im_
 
+def transfrom_batch_color(im,c):
+
+    assert np.shape(im)[0] == 64, "This is not a mini-batch(64)"
+
+    im_ = np.zeros((8*128,8*128,3))
+  
+    for i in range(64):
+        m = i//8
+        n = i%8
+        if  np.shape(im)[-1] !=3:
+            im_[m*128:(m+1)*128,n*128:(n+1)*128,0] = im[i]
+            im_[m*128:(m+1)*128,n*128:(n+1)*128,1] = im[i]
+            im_[m*128:(m+1)*128,n*128:(n+1)*128,2] = im[i]
+        else:
+            im_[m*128:(m+1)*128,n*128:(n+1)*128] = im[i]
+
+    # im_ = cv2.cvtColor(im_, cv2.COLOR_GRAY2RGB)
+
+    for i in range(1,8):
+        im_[i*128,:] = c
+        im_[:,i*128] = c
+
+    return im_
+
 def convert_bw_im2hsv_im(bw,color):
 
     if np.max(bw)>1:
