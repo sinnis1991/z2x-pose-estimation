@@ -44,17 +44,22 @@ def transfrom_batch_color(im,c):
 
     assert np.shape(im)[0] == 64, "This is not a mini-batch(64)"
 
+    im_set = np.copy(im)
+
     im_ = np.zeros((8*128,8*128,3))
+    if np.max(im_set)<=1:
+        im_set = im_set*255
+        im_set = im_set.astype('uint8')
   
     for i in range(64):
         m = i//8
         n = i%8
         if  np.shape(im)[-1] !=3:
-            im_[m*128:(m+1)*128,n*128:(n+1)*128,0] = im[i]
-            im_[m*128:(m+1)*128,n*128:(n+1)*128,1] = im[i]
-            im_[m*128:(m+1)*128,n*128:(n+1)*128,2] = im[i]
+            im_[m*128:(m+1)*128,n*128:(n+1)*128,0] = im_set[i]
+            im_[m*128:(m+1)*128,n*128:(n+1)*128,1] = im_set[i]
+            im_[m*128:(m+1)*128,n*128:(n+1)*128,2] = im_set[i]
         else:
-            im_[m*128:(m+1)*128,n*128:(n+1)*128] = im[i]
+            im_[m*128:(m+1)*128,n*128:(n+1)*128] = im_set[i]
 
     # im_ = cv2.cvtColor(im_, cv2.COLOR_GRAY2RGB)
 
